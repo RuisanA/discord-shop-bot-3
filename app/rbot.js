@@ -11,6 +11,16 @@ const {
 const moment = require("moment");
 const express = require("express");
 const app = express();
+app.use(express.json());
+
+app.post("/", (req, res) => {
+  console.log("Wake-up ping received:", req.body);
+  res.status(200).send("OK");
+});
+
+app.get("/", (req, res) => {
+  res.send("Server is awake");
+});
 const fs = require("fs");
 const axios = require("axios");
 const util = require("util");
@@ -50,19 +60,6 @@ const newbutton = (buttondata) => {
 process.env.TZ = "Asia/Tokyo";
 ("use strict");
 let guildId;
-
-http
-  .createServer(function (request, response) {
-    try {
-      response.writeHead(200, { "Content-Type": "text/plain;charset=utf-8" });
-      response.end(
-        `ログイン`
-      );
-    } catch (e) {
-      console.log(e);
-    }
-  })
-  .listen(8080);
 
 if (process.env.DISCORD_BOT_TOKEN == undefined) {
   console.error("tokenが設定されていません！");
