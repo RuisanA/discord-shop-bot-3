@@ -21,6 +21,10 @@ app.post("/", (req, res) => {
 app.get("/", (req, res) => {
   res.send("Server is awake");
 });
+
+app.listen(3000, () => {
+    console.log(`App listening at http://localhost:${3000}`);
+});
 const fs = require("fs");
 const axios = require("axios");
 const util = require("util");
