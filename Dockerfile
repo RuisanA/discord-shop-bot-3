@@ -10,8 +10,5 @@ COPY app/ .
 # 依存関係のインストール
 RUN npm install
 
-# ポートを開ける（Koyeb用）、使用してるポート番号にすること。
-EXPOSE 8080
-
 # アプリの起動、コマンドを指定しよう。index.jsなら"node", "index.js"
 CMD ["node", "rbot.js"]
