@@ -11,20 +11,6 @@ const {
 const moment = require("moment");
 const express = require("express");
 const app = express();
-app.use(express.json());
-
-app.post("/", (req, res) => {
-  console.log("Wake-up ping received:", req.body);
-  res.status(200).send("OK");
-});
-
-app.get("/", (req, res) => {
-  res.send("Server is awake");
-});
-
-app.listen(3000, () => {
-    console.log(`App listening at http://localhost:${3000}`);
-});
 const fs = require("fs");
 const axios = require("axios");
 const util = require("util");
@@ -64,6 +50,19 @@ const newbutton = (buttondata) => {
 process.env.TZ = "Asia/Tokyo";
 ("use strict");
 let guildId;
+
+http
+  .createServer(function (request, response) {
+    try {
+      response.writeHead(200, { "Content-Type": "text/plain;charset=utf-8" });
+      response.end(
+        `ログイン`
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  })
+  .listen(8080);
 
 if (process.env.DISCORD_BOT_TOKEN == undefined) {
   console.error("tokenが設定されていません！");
@@ -2570,7 +2569,7 @@ client.on("messageCreate", async (message) => {
 
     const embed = new MessageEmbed()
       .setTitle("石垢販売")
-      .addField(`1.🟩 モンスト①【全機種対応】2000オーブ↑`, `> 800円`)
+      .addField(`1.🟩 モンスト①【全機種対応】2700オーブ↑`, `> 1500円`)
       .addField(`2.🟦 バウンティ① 【iOS用】5000ダイヤ↑ ＋ 300金欠片↑`, `> 600円`)
       .addField(`3.🟦 バウンティ②【iOS用】5000ダイヤ↑ ＋ 1100金欠片↑`, `> 1300円`)
       .addField(`4.🟥 バウンティ① 【Android用】5000~6000ダイヤ ＋ 540金欠片↑`, `> 360円`)
@@ -2761,6 +2760,187 @@ client.on("modalSubmit", async (interaction) => {
     if (roleId !== "undefined") {
       const mention = await newChannel.send(`<@&${roleId}>`);
       setTimeout(() => mention.delete(), 3000);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+client.on("messageCreate", async (message) => {
+  if (message.author.bot || !message.guild) return;
+    if (message.content === "iosmod") {
+      if (message.author.id !== "1178414826184265819") {
+      return message.channel.send("このコマンドを実行する権限がありません。");
+    }
+  
+      const categoryId = "1209000933200101386",
+            roleId = "1209001270355034162"
+      const embed = new MessageEmbed()
+        .setTitle("ぷにぷにiOS MODMENU販売")
+        .setDescription(`iPhone対応,UGや脱獄等不要で使用できるぷにぷにModMenuです`)
+        .addField(`1.ぷにぷにiOS対応ModMenu`, `> 800`)
+        .setImage(`https://media.discordapp.net/attachments/1365763128851435633/1397458695348162580/36_20250723135706.png?ex=6881cc54&is=68807ad4&hm=1fa5c51c0feaf6c0f011a985435b3fab7faaf1e92dd5908e7791f579672ae9e9&=&format=webp&quality=lossless`)
+        .setColor("RANDOM");
+      message.channel.send({
+        embeds: [embed],
+        components: [
+          newbutton([
+            {
+              id: `iospunimod-${categoryId}-${roleId}`,
+              label: "購入",
+              style: "SUCCESS",
+            },
+          ]),
+        ],
+      });
+    }
+  });
+
+  client.on("interactionCreate", async (interaction) => {
+  try {
+    if (!interaction.isButton()) {
+      return;
+    }
+    console.log(interaction.customId);
+  if (interaction.isButton() && interaction.customId.startsWith("iospunimod")) {
+    const [_, categoryId, roleId] = interaction.customId.split("-");
+
+    const products = interaction.message.embeds[0].fields;
+
+    const options = products.map((field, index) => ({
+    label: field.name,
+    description: field.value.replace(/^> /, ''),
+    value: `${index + 1}`, // 商品番号
+  }));
+
+    const row = new MessageActionRow().addComponents(
+    new MessageSelectMenu()
+      .setCustomId(`iospunimoditem-${categoryId}-${roleId}`)
+      .setPlaceholder("購入する商品を選んでください")
+      .addOptions(options)
+  );
+
+  interaction.reply({
+    content: "購入する商品を選択してください",
+    components: [row],
+    ephemeral: true,
+  });
+}
+} catch (e) {
+    console.log(e);
+  }
+});
+
+client.on('interactionCreate', async (interaction) => {
+  if (!interaction.isSelectMenu()) return;
+  if (!interaction.customId.startsWith("iospunimoditem-")) return;
+
+  const [_, categoryId, roleId] = interaction.customId.split("-");
+  const selectedNumber = interaction.values[0];
+
+  const modal = new Modal()
+    .setCustomId(`iospunimodmodal-${categoryId}-${roleId}-${selectedNumber}`)
+    .setTitle("購入情報入力フォーム")
+    .addComponents([
+      new TextInputComponent()
+        .setCustomId("paypay")
+        .setLabel("送金リンク")
+        .setStyle("LONG")
+        .setMinLength(10)
+        .setPlaceholder("[PayPay] 受け取り依頼が届きました。下記リンクより、受け取りを完了してください。https://pay.paypay.ne.jp/abcdef0123456789")
+        .setRequired(true),
+    ]);
+
+  showModal(modal, {
+    client,
+    interaction,
+  });
+});
+
+client.on("modalSubmit", async (interaction) => {
+  try {
+    if (interaction.customId.startsWith("iospunimodmodal-")) {
+      const [_, categoryId, roleId, number] = interaction.customId.split("-");
+
+      const paypay = interaction.getTextInputValue("paypay");
+
+      const lines = paypay.split(/\r?\n/);
+
+      let link;
+
+      for (const line of lines) {
+        if (/^https?:\/\/\S+/i.test(line)) {
+          link = line.trim();
+          break;
+        }
+      }
+
+      if (!link)
+        return interaction.reply({
+          content: "PayPayの送金リンクが検出されませんでした",
+          ephemeral: true,
+        });
+
+      const overwrites = [
+        {
+          id: interaction.user.id,
+          allow: ["VIEW_CHANNEL", "SEND_MESSAGES"],
+        },
+        {
+          id: interaction.guild.roles.everyone,
+          deny: ["VIEW_CHANNEL", "SEND_MESSAGES"],
+        },
+      ];
+
+      if (roleId !== "undefined") {
+        overwrites.push({
+          id: roleId,
+          allow: ["VIEW_CHANNEL", "SEND_MESSAGES"],
+        });
+      }
+
+      const channelName = `🎫｜${interaction.user.username}`;
+      const newChannel = await interaction.guild.channels.create(channelName, {
+        type: "GUILD_TEXT",
+        parent: categoryId !== "undefined" ? categoryId : undefined,
+        topic: interaction.user.id,
+        permissionOverwrites: overwrites,
+      });
+
+      await interaction.reply({
+        content: `${newChannel.toString()}を作成しました。`,
+        ephemeral: true,
+      });
+
+      const welcome = "ぷにぷにiOS MODMENU販売";
+
+      const embed = new MessageEmbed()
+        .setTitle("スタッフの対応をお待ちください")
+        .addField("商品番号:", `>>> ${number}`)
+        .addField("送金リンク:", `>>> ${link}`)
+        .setColor("RANDOM");
+
+      const welcomeembed = new MessageEmbed()
+      .setDescription(welcome)
+      .setColor("RANDOM");
+
+      await newChannel.send({
+        content: `<@${interaction.user.id}>`,
+        embeds: [embed, welcomeembed],
+        components: [
+          new MessageActionRow().addComponents(
+            new MessageButton()
+              .setCustomId("ifdelete")
+              .setLabel("チケットを削除")
+              .setStyle("DANGER")
+          ),
+        ],
+      });
+
+      if (roleId !== "undefined") {
+        const mention = await newChannel.send(`<@&${roleId}>`);
+        setTimeout(() => mention.delete(), 3000);
+      }
     }
   } catch (err) {
     console.log(err);
