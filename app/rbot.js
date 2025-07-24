@@ -238,7 +238,7 @@ client.on("interactionCreate", async (interaction) => {
     if (interaction.customId == "ifdelete") {
     if (!interaction.isButton()) return;
   
-    const allowedRoleId = "1209001270355034162";
+    const allowedRoleId = "1388759854738571268";
   
     if (!interaction.member.roles.cache.has(allowedRoleId)) {
       return interaction.reply({
@@ -2349,7 +2349,7 @@ client.on("messageCreate", async (message) => {
     }
   
       const categoryId = "1388759852771311716",
-            roleId = "1388759854738571268"
+            roleId = "1397921281235619932"
       const embed = new MessageEmbed()
         .setTitle("サーバーブースト販売")
         .setDescription(`送金リンク,サーバー招待リンクをご準備ください`)
@@ -2565,7 +2565,7 @@ client.on("messageCreate", async (message) => {
     }
 
     const categoryId = "1388759852771311716";
-    const roleId = "1388759854738571268";
+    const roleId = "1397921281235619932";
 
     const embed = new MessageEmbed()
       .setTitle("石垢販売")
