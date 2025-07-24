@@ -2348,8 +2348,8 @@ client.on("messageCreate", async (message) => {
       return message.channel.send("このコマンドを実行する権限がありません。");
     }
   
-      const categoryId = "1209000933200101386",
-            roleId = "1214490140173402132"
+      const categoryId = "1388759852771311716",
+            roleId = "1388759854738571268"
       const embed = new MessageEmbed()
         .setTitle("サーバーブースト販売")
         .setDescription(`送金リンク,サーバー招待リンクをご準備ください`)
@@ -2564,8 +2564,8 @@ client.on("messageCreate", async (message) => {
       return message.channel.send("このコマンドを実行する権限がありません。");
     }
 
-    const categoryId = "1209000933200101386";
-    const roleId = "1214490140173402132";
+    const categoryId = "1388759852771311716";
+    const roleId = "1388759854738571268";
 
     const embed = new MessageEmbed()
       .setTitle("石垢販売")
@@ -2773,8 +2773,8 @@ client.on("messageCreate", async (message) => {
       return message.channel.send("このコマンドを実行する権限がありません。");
     }
   
-      const categoryId = "1209000933200101386",
-            roleId = "1209001270355034162"
+      const categoryId = "1388759852771311716",
+            roleId = "1388759854738571268"
       const embed = new MessageEmbed()
         .setTitle("ぷにぷにiOS MODMENU販売")
         .setDescription(`iPhone対応,UGや脱獄等不要で使用できるぷにぷにModMenuです`)
