@@ -2349,7 +2349,7 @@ client.on("messageCreate", async (message) => {
     }
   
       const categoryId = "1388759852771311716",
-            roleId = "1397921281235619932"
+            roleId = "1397921281235619932 "
       const embed = new MessageEmbed()
         .setTitle("サーバーブースト販売")
         .setDescription(`送金リンク,サーバー招待リンクをご準備ください`)
@@ -2779,7 +2779,7 @@ client.on("messageCreate", async (message) => {
         .setTitle("ぷにぷにiOS MODMENU販売")
         .setDescription(`iPhone対応,UGや脱獄等不要で使用できるぷにぷにModMenuです`)
         .addField(`1.ぷにぷにiOS対応ModMenu`, `> 800`)
-        .setImage(`https://media.discordapp.net/attachments/1365763128851435633/1397458695348162580/36_20250723135706.png?ex=6881cc54&is=68807ad4&hm=1fa5c51c0feaf6c0f011a985435b3fab7faaf1e92dd5908e7791f579672ae9e9&=&format=webp&quality=lossless`)
+        .setImage(`https://media.discordapp.net/attachments/1389175359039082557/1401180578446839819/37_20250802213032.png?ex=688f569a&is=688e051a&hm=73cbc3ee0107e776054dfed6b7a8b01b38f804e0c71515a780769a94895853fe&=&format=webp&quality=lossless`)
         .setColor("RANDOM");
       message.channel.send({
         embeds: [embed],
