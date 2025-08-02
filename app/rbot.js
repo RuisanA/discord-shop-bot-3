@@ -2349,7 +2349,7 @@ client.on("messageCreate", async (message) => {
     }
   
       const categoryId = "1388759852771311716",
-            roleId = "1397921281235619932 "
+            roleId = "1397921281235619932"
       const embed = new MessageEmbed()
         .setTitle("サーバーブースト販売")
         .setDescription(`送金リンク,サーバー招待リンクをご準備ください`)
