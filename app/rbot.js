@@ -2773,8 +2773,8 @@ client.on("messageCreate", async (message) => {
       return message.channel.send("このコマンドを実行する権限がありません。");
     }
   
-      const categoryId = "1388759852771311716",
-            roleId = "1388759854738571268"
+      const categoryId = "1401187216427843675",
+            roleId = "1406633240533532949"
       const embed = new MessageEmbed()
         .setTitle("ぷにぷにiOS MODMENU販売")
         .setDescription(`iPhone対応,UGや脱獄等不要で使用できるぷにぷにModMenuです`)
