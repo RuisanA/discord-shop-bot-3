@@ -2779,6 +2779,7 @@ client.on("messageCreate", async (message) => {
         .setTitle("ぷにぷにiOS MODMENU販売")
         .setDescription(`iPhone対応,UGや脱獄等不要で使用できるぷにぷにModMenuです`)
         .addField(`1.ぷにぷにiOS対応ModMenu`, `> 800`)
+        .addField(`2.ぷにぷにiOS対応ModMenu(ぷにサイズ検知回避Ver)`, `> 1100`)
         .setImage(`https://media.discordapp.net/attachments/1389175359039082557/1401180578446839819/37_20250802213032.png?ex=688f569a&is=688e051a&hm=73cbc3ee0107e776054dfed6b7a8b01b38f804e0c71515a780769a94895853fe&=&format=webp&quality=lossless`)
         .setColor("RANDOM");
       message.channel.send({
