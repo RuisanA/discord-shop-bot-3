@@ -2965,7 +2965,7 @@ client.on("messageCreate", async (message) => {
       const embed = new MessageEmbed()
         .setTitle("ぷにぷにiOS MODMENU販売")
         .setDescription(`iPhone対応,UGや脱獄等不要で使用できるぷにぷにModMenuです`)
-        .addField(`1.ぷにぷにiOS対応ModMenu`, `> 1000`)
+        .addField(`1.ぷにぷにiOS対応ModMenu`, `> 1000円`)
         .setImage(`https://media.discordapp.net/attachments/1369904649494073407/1483456509894721556/64_20260317221556.png?ex=69baa809&is=69b95689&hm=4aadb4a7a07c592ded83e918a762773ec24752083588e951fb1e6112d545920f&=&format=webp&quality=lossless&width=1127&height=873`)
         .setColor("RANDOM");
       message.channel.send({
@@ -3174,7 +3174,7 @@ client.on('interactionCreate', async (interaction) => {
         .setColor("RANDOM")
         .setTimestamp();
 
-        interaction.channel.send({ embeds: embed });
+        await interaction.channel.send({ embeds: [embed] });
 
     } catch (error) {
         console.error("ボタン更新エラー:", error);
