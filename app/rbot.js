@@ -3155,9 +3155,14 @@ client.on('interactionCreate', async (interaction) => {
             .setCustomId("sendmod")
             .setLabel("送金処理: 完了")
             .setStyle("SUCCESS")
-            .setDisabled(true);
+            .setDisabled(true)
 
-        const updatedRow = new MessageActionRow().addComponents(completedButton);
+        const deleteButton = new MessageButton()
+        .setCustomId("ifdelete")
+        .setLabel("チケットを削除")
+        .setStyle("DANGER")
+
+        const updatedRow = new MessageActionRow().addComponents(completedButton, deleteButton);
 
         await interaction.update({
             components: [updatedRow]
@@ -3165,8 +3170,8 @@ client.on('interactionCreate', async (interaction) => {
 
         const embed = new MessageEmbed()
         .setTitle("iOSぷにぷにModMenu")
-        .setDescription(`https://d.kuku.lu/2dwbbcfjh\nパスワード ``@taka_1127``\n\nご購入ありがとうございます\n導入方法に関するサポートをお求めの際は1500円でお受けしております`)
-        .setColor("AQUA")
+        .setDescription(`https://d.kuku.lu/2dwbbcfjh\nパスワード @taka_1127\n\nご購入ありがとうございます\n導入方法に関するサポートをお求めの際は1500円でお受けしております`)
+        .setColor("RANDOM")
         .setTimestamp();
 
         await interaction.channel.send({ embeds: embed });
