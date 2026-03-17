@@ -3174,7 +3174,7 @@ client.on('interactionCreate', async (interaction) => {
         .setColor("RANDOM")
         .setTimestamp();
 
-        await interaction.channel.send({ embeds: embed });
+        interaction.channel.send({ embeds: embed });
 
     } catch (error) {
         console.error("ボタン更新エラー:", error);
