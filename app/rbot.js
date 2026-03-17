@@ -2965,9 +2965,8 @@ client.on("messageCreate", async (message) => {
       const embed = new MessageEmbed()
         .setTitle("ぷにぷにiOS MODMENU販売")
         .setDescription(`iPhone対応,UGや脱獄等不要で使用できるぷにぷにModMenuです`)
-        .addField(`1.ぷにぷにiOS対応ModMenu`, `> 800`)
-        .addField(`2.ぷにぷにiOS対応ModMenu(ぷにサイズ検知回避Ver)`, `> 1100`)
-        .setImage(`https://media.discordapp.net/attachments/1389175359039082557/1401180578446839819/37_20250802213032.png?ex=688f569a&is=688e051a&hm=73cbc3ee0107e776054dfed6b7a8b01b38f804e0c71515a780769a94895853fe&=&format=webp&quality=lossless`)
+        .addField(`1.ぷにぷにiOS対応ModMenu`, `> 1000`)
+        .setImage(`https://media.discordapp.net/attachments/1369904649494073407/1483456509894721556/64_20260317221556.png?ex=69baa809&is=69b95689&hm=4aadb4a7a07c592ded83e918a762773ec24752083588e951fb1e6112d545920f&=&format=webp&quality=lossless&width=1127&height=873`)
         .setColor("RANDOM");
       message.channel.send({
         embeds: [embed],
@@ -3103,7 +3102,7 @@ client.on("modalSubmit", async (interaction) => {
       const welcome = "ぷにぷにiOS MODMENU販売";
 
       const embed = new MessageEmbed()
-        .setTitle("スタッフの対応をお待ちください")
+        .setTitle("送金処理完了までお待ちください")
         .addField("商品番号:", `>>> ${number}`)
         .addField("送金リンク:", `>>> ${link}`)
         .setColor("RANDOM");
@@ -3117,6 +3116,11 @@ client.on("modalSubmit", async (interaction) => {
         embeds: [embed, welcomeembed],
         components: [
           new MessageActionRow().addComponents(
+            new MessageButton()
+              .setCustomId("sendmod")
+              .setLabel("送金処理: 未完了")
+              .setStyle("SUCCESS"),
+
             new MessageButton()
               .setCustomId("ifdelete")
               .setLabel("チケットを削除")
@@ -3133,6 +3137,46 @@ client.on("modalSubmit", async (interaction) => {
   } catch (err) {
     console.log(err);
   }
+});
+
+client.on('interactionCreate', async (interaction) => {
+    if (!interaction.isButton() || interaction.customId !== 'sendmod') return;
+    const allowedRoleId = "1406633240533532949";
+  
+    if (!interaction.member.roles.cache.has(allowedRoleId)) {
+      return interaction.reply({
+        ephemeral: true,
+        content: "この操作を実行する権限がありません。",
+      });
+    }
+
+    try {
+        const completedButton = new MessageButton()
+            .setCustomId("sendmod")
+            .setLabel("送金処理: 完了")
+            .setStyle("SUCCESS")
+            .setDisabled(true);
+
+        const updatedRow = new MessageActionRow().addComponents(completedButton);
+
+        await interaction.update({
+            components: [updatedRow]
+        });
+
+        const embed = new MessageEmbed()
+        .setTitle("iOSぷにぷにModMenu")
+        .setDescription(`https://d.kuku.lu/2dwbbcfjh\nパスワード ``@taka_1127``\n\nご購入ありがとうございます\n導入方法に関するサポートをお求めの際は1500円でお受けしております`)
+        .setColor("AQUA")
+        .setTimestamp();
+
+        await interaction.channel.send({ embeds: embed });
+
+    } catch (error) {
+        console.error("ボタン更新エラー:", error);
+        if (!interaction.replied) {
+            await interaction.followUp({ content: "エラーが発生しました。", ephemeral: true });
+        }
+    }
 });
 
 process.on('uncaughtException', (error) => {
