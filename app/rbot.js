@@ -3184,6 +3184,24 @@ client.on('interactionCreate', async (interaction) => {
     }
 });
 
+client.on("messageCreate", async (message) => {
+  if (message.author.bot) return;
+
+  // 「おはよう」に反応
+  if (message.content === "おはよう") {
+    return message.reply("おはよう");
+  }
+
+  // 「!userid @メンション」に反応
+  if (message.content.startsWith("!userid")) {
+    const targetUser = message.mentions.users.first();
+    if (!targetUser) {
+      return message.reply("ユーザーをメンションしてください。（例: !userid @user）");
+    }
+    return message.reply(`${targetUser.tag} のユーザーID: \`${targetUser.id}\``);
+  }
+});
+
 process.on('uncaughtException', (error) => {
     console.error('未処理の例外:', error);
     fs.appendFileSync('error.log', `未処理の例外: ${error.stack}\n`);
